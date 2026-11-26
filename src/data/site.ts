@@ -18,7 +18,7 @@ export const site = {
   yearsInBusiness: null as number | null, // TODO e.g. 15. Leave null to hide claims
   hours: 'Mon-Sat 7am-6pm',           // TODO
   responseTime: '',                   // TODO e.g. 'We reply within 1 business day'. Leave empty until confirmed.
-  formEndpoint: '',                   // TODO e.g. Formspree/Netlify/Resend URL
+  formEndpoint: '/api/estimate',      // Cloudflare Pages Function (functions/api/estimate.js), sends via Resend
   geo: { lat: 26.2379, lng: -80.1248 }, // Pompano Beach center, TODO exact address coords
   url: 'https://masonrycontractorpompanobeach.com',
 };

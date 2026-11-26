@@ -8,6 +8,7 @@ const connected = Boolean(site.formEndpoint);
   {sub && <p class="sub">Takes about 30 seconds.{site.responseTime ? ` ${site.responseTime}.` : ''}</p>}
   <form method="post" action={site.formEndpoint || undefined} enctype="multipart/form-data" data-form data-connected={connected ? 'yes' : 'no'}>
     {cityValue && <input type="hidden" name="city" value={cityValue} />}
+    <input type="hidden" name="source" value={Astro.url.pathname} />
     <input class="hp" type="text" name="company_website" tabindex="-1" autocomplete="off" aria-hidden="true" />
     <div class="row2">
       <div>
@@ -42,13 +43,29 @@ const connected = Boolean(site.formEndpoint);
   </form>
 </div>
 <script is:inline>
-  // Until a form endpoint is configured, do not pretend the request was sent.
-  document.querySelectorAll('form[data-form][data-connected="no"]').forEach(function (f) {
+  // Bind each estimate form once (the component can appear twice on a page).
+  document.querySelectorAll('form[data-form]:not([data-bound])').forEach(function (f) {
+    f.setAttribute('data-bound', '1');
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var s = f.querySelector('.form-status');
-      s.hidden = false;
-      s.textContent = 'Online requests are not switched on yet, so this was not sent.';
+      var b = f.querySelector('button[type="submit"]');
+      var show = function (msg, state) { s.hidden = false; s.textContent = msg; s.setAttribute('data-state', state); };
+      if (f.getAttribute('data-connected') !== 'yes') { show('Online requests are not switched on yet, so this was not sent.', 'error'); return; }
+      var files = f.querySelector('input[type="file"]').files, total = 0;
+      for (var i = 0; i < files.length; i++) total += files[i].size;
+      if (files.length > 5) { show('Please attach no more than 5 photos.', 'error'); return; }
+      if (total > 10 * 1024 * 1024) { show('Photos must total under 10 MB. Please attach fewer or smaller photos.', 'error'); return; }
+      var label = b.textContent;
+      b.disabled = true; b.textContent = 'Sending...'; s.hidden = true;
+      fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, error: d.error }; }); })
+        .then(function (res) {
+          if (res.ok) { f.reset(); show('Thank you. Your request has been sent, and we will review it and get back to you.', 'ok'); }
+          else show(res.error || 'Sorry, your request could not be sent. Please try again in a moment.', 'error');
+        })
+        .catch(function () { show('Sorry, your request could not be sent. Please check your connection and try again.', 'error'); })
+        .finally(function () { b.disabled = false; b.textContent = label; });
     });
   });
 </script>
