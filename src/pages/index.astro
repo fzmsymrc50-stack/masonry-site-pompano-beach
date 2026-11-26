@@ -67,7 +67,7 @@ const title = `Masonry Contractor Pompano Beach, FL | ${site.shortName}`;
 const description = 'Looking for a masonry contractor in Pompano Beach, FL? Explore professional brick, block and masonry services for residential and commercial projects. Request an estimate.';
 
 const schema = [
-  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/\s*\]*\)/g, '') } })) },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
   { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: site.url + '/', about: 'Masonry contractor in Pompano Beach, FL' },
   { '@context': 'https://schema.org', '@type': 'OfferCatalog', name: 'Masonry services', itemListElement: cards.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, url: `${site.url}/${s.slug}/` } })) },
 ];
