@@ -6,5 +6,5 @@ export default defineConfig({
   site: 'https://masonrycontractorpompanobeach.com',
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !/\/(thank-you|privacy|terms)\/$/.test(page) })],
 });
