@@ -81,7 +81,7 @@ const nav = [
         {services.filter(s => mainServiceSlugs.includes(s.slug)).map(s => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
         <li><a href="/services/">All services</a></li></ul></div>
       <div><h3>Service areas</h3><ul>
-        {locations.slice(0, 6).map(l => <li><a href={`/${l.slug}/`}>{l.city}</a></li>)}
+        {locations.slice(0, 6).map(l => <li><a href={`/locations/${l.slug}/`}>{l.city}</a></li>)}
         <li><a href="/areas-we-serve/">All areas</a></li></ul></div>
       <div><h3>Company</h3><ul>
         <li><a href="/about/">About</a></li><li><a href="/our-process/">Our process</a></li>

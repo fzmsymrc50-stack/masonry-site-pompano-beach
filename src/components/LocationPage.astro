@@ -107,7 +107,7 @@ const why = [
   <section class="section"><div class="wrap sp-narrow">
     <h2>Areas near {c.city} we also serve</h2>
     <p>{c.nearby.intro}</p>
-    <ul class="pills">{nearbyLinks.map(n => <li>{n.slug ? <a href={`/${n.slug}/`}>{n.name}</a> : <span class="pill">{n.name}</span>}</li>)}</ul>
+    <ul class="pills">{nearbyLinks.map(n => <li>{n.slug ? <a href={`/locations/${n.slug}/`}>{n.name}</a> : <span class="pill">{n.name}</span>}</li>)}</ul>
     <p class="sp-aside">Our home base is Pompano Beach, and you can see every city we cover on the <a href="/areas-we-serve/">areas we serve</a> page. For an overview of what we do, visit the <a href="/">Masonry Pompano Beach homepage</a> or read <a href="/about/">about the company</a>.</p>
   </div></section>
 

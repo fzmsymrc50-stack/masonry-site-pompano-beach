@@ -8,12 +8,12 @@ import { locationContent } from '../data/location-content';
   <section class="section"><div class="wrap">
     <h2>Cities we work in</h2>
     <p>We take masonry projects in Pompano Beach and the surrounding cities of Broward County and southern Palm Beach County. Drive times are approximate.</p>
-    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
+    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/locations/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
   </div></section>
   <section class="section alt"><div class="wrap">
     <h2>Local information</h2>
     <div class="grid3">
-      {locations.map(l => <div class="card"><h3><a href={`/${l.slug}/`}>Masonry contractor in {l.city}</a></h3><p>{locationContent[l.slug].blurb}</p></div>)}
+      {locations.map(l => <div class="card"><h3><a href={`/locations/${l.slug}/`}>Masonry contractor in {l.city}</a></h3><p>{locationContent[l.slug].blurb}</p></div>)}
     </div>
   </div></section>
 </Base>

@@ -90,7 +90,7 @@ const mapSrc = 'https://maps.google.com/maps?q=Pompano%20Beach%2C%20FL&z=10&outp
   <section class="section alt"><div class="wrap sp-narrow">
     <h2>Areas we serve</h2>
     <p>We take projects in Pompano Beach and the cities around it, within roughly a 30-minute drive. Cities with a link have their own page with local information.</p>
-    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
+    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/locations/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
     <p class="fine">Drive times are approximate. If your property is just outside this list, include the address area in your enquiry and we will let you know.</p>
   </div></section>
 

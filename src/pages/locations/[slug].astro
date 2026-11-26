@@ -1,0 +1,9 @@
+---
+import LocationPage from '../../components/LocationPage.astro';
+import { locations } from '../../data/site';
+export function getStaticPaths() {
+  return locations.map(l => ({ params: { slug: l.slug }, props: { item: l } }));
+}
+const { item } = Astro.props;
+---
+<LocationPage item={item} />

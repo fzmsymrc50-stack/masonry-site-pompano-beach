@@ -158,12 +158,12 @@ export const mainServiceSlugs = ['block-masonry', 'concrete-block-walls', 'brick
 // Cities with their own page. Copy for each lives in location-content.ts (researched, not templated).
 export type Location = { slug: string; city: string };
 export const locations: Location[] = [
-  { slug: 'masonry-contractor-lighthouse-point-fl', city: 'Lighthouse Point' },
-  { slug: 'masonry-contractor-deerfield-beach-fl', city: 'Deerfield Beach' },
-  { slug: 'masonry-contractor-fort-lauderdale-fl', city: 'Fort Lauderdale' },
-  { slug: 'masonry-contractor-coconut-creek-fl', city: 'Coconut Creek' },
-  { slug: 'masonry-contractor-coral-springs-fl', city: 'Coral Springs' },
-  { slug: 'masonry-contractor-boca-raton-fl', city: 'Boca Raton' },
+  { slug: 'lighthouse-point-fl', city: 'Lighthouse Point' },
+  { slug: 'deerfield-beach-fl', city: 'Deerfield Beach' },
+  { slug: 'fort-lauderdale-fl', city: 'Fort Lauderdale' },
+  { slug: 'coconut-creek-fl', city: 'Coconut Creek' },
+  { slug: 'coral-springs-fl', city: 'Coral Springs' },
+  { slug: 'boca-raton-fl', city: 'Boca Raton' },
 ];
 
 // Everything within roughly a 30-minute drive of Pompano Beach (approximate).

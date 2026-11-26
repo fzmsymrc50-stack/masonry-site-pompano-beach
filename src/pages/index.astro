@@ -190,7 +190,7 @@ const schema = [
       <h2>Your Local Masonry Contractor Serving Pompano Beach and Surrounding Areas</h2>
       <p>As a local masonry contractor based in {site.address.city}, we take projects in the cities within roughly a 30-minute drive, across Broward County and into southern Palm Beach County. Choose a city to see local information.</p>
     </div>
-    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
+    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/locations/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
   </div></section>
 
   <CtaBand lead="Have a job in mind?" />

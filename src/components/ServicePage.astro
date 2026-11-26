@@ -123,7 +123,7 @@ const why = [
   <section class="section"><div class="wrap sp-narrow">
     <h2>Where we do {item.name.toLowerCase()}</h2>
     <p>We are based in {site.address.city} and take projects in the cities within roughly a 30-minute drive, across Broward County and into southern Palm Beach County.</p>
-    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
+    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/locations/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
   </div></section>
 
   <!-- 10. FAQs -->

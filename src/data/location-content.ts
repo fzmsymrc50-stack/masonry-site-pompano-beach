@@ -24,8 +24,8 @@ export type LocationPage = {
 
 export const locationContent: Record<string, LocationPage> = {
   /* ================================================================ */
-  'masonry-contractor-lighthouse-point-fl': {
-    slug: 'masonry-contractor-lighthouse-point-fl',
+  'lighthouse-point-fl': {
+    slug: 'lighthouse-point-fl',
     city: 'Lighthouse Point',
     blurb: 'Canal-front homes, salt air and the Intracoastal.',
     title: 'Masonry Contractor in Lighthouse Point, FL | Masonry Pompano Beach',
@@ -91,8 +91,8 @@ export const locationContent: Record<string, LocationPage> = {
   },
 
   /* ================================================================ */
-  'masonry-contractor-deerfield-beach-fl': {
-    slug: 'masonry-contractor-deerfield-beach-fl',
+  'deerfield-beach-fl': {
+    slug: 'deerfield-beach-fl',
     city: 'Deerfield Beach',
     blurb: 'Beach-side and inland properties, from 1920s buildings to newer neighbourhoods.',
     title: 'Masonry Contractor in Deerfield Beach, FL | Masonry Pompano Beach',
@@ -159,8 +159,8 @@ export const locationContent: Record<string, LocationPage> = {
   },
 
   /* ================================================================ */
-  'masonry-contractor-fort-lauderdale-fl': {
-    slug: 'masonry-contractor-fort-lauderdale-fl',
+  'fort-lauderdale-fl': {
+    slug: 'fort-lauderdale-fl',
     city: 'Fort Lauderdale',
     blurb: 'Waterways, historic buildings, high-rises and king-tide flooding.',
     title: 'Masonry Contractor in Fort Lauderdale, FL | Masonry Pompano Beach',
@@ -227,8 +227,8 @@ export const locationContent: Record<string, LocationPage> = {
   },
 
   /* ================================================================ */
-  'masonry-contractor-coconut-creek-fl': {
-    slug: 'masonry-contractor-coconut-creek-fl',
+  'coconut-creek-fl': {
+    slug: 'coconut-creek-fl',
     city: 'Coconut Creek',
     blurb: 'A planned city of landscaped communities, lakes and condos.',
     title: 'Masonry Contractor in Coconut Creek, FL | Masonry Pompano Beach',
@@ -295,8 +295,8 @@ export const locationContent: Record<string, LocationPage> = {
   },
 
   /* ================================================================ */
-  'masonry-contractor-coral-springs-fl': {
-    slug: 'masonry-contractor-coral-springs-fl',
+  'coral-springs-fl': {
+    slug: 'coral-springs-fl',
     city: 'Coral Springs',
     blurb: 'A large planned city with strict aesthetic rules and homes from the 1970s to the 1990s.',
     title: 'Masonry Contractor in Coral Springs, FL | Masonry Pompano Beach',
@@ -363,8 +363,8 @@ export const locationContent: Record<string, LocationPage> = {
   },
 
   /* ================================================================ */
-  'masonry-contractor-boca-raton-fl': {
-    slug: 'masonry-contractor-boca-raton-fl',
+  'boca-raton-fl': {
+    slug: 'boca-raton-fl',
     city: 'Boca Raton',
     blurb: 'Coastal and upscale properties in southern Palm Beach County.',
     title: 'Masonry Contractor in Boca Raton, FL | Masonry Pompano Beach',
