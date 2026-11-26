@@ -20,7 +20,7 @@ export const site = {
   responseTime: '',                   // TODO e.g. 'We reply within 1 business day'. Leave empty until confirmed.
   formEndpoint: '',                   // TODO e.g. Formspree/Netlify/Resend URL
   geo: { lat: 26.2379, lng: -80.1248 }, // Pompano Beach center, TODO exact address coords
-  url: 'https://www.example-masonry.com', // TODO
+  url: 'https://masonrycontractorpompanobeach.com',
 };
 
 export type Service = {
