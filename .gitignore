@@ -27,3 +27,4 @@ pnpm-debug.log*
 # working copies and local tooling (not part of the site)
 research/backup/
 .claude/
+.wrangler/
