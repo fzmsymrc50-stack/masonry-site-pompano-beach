@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from './QuoteForm.astro';
+import { site, services, areaList } from '../data/site';
+import { locationContent } from '../data/location-content';
+
+const { item } = Astro.props;
+const c = locationContent[item.slug];
+const svcName = (slug: string) => services.find(s => s.slug === slug)?.name ?? '';
+const nearbyLinks = c.nearby.cities.map(name => ({ name, slug: areaList.find(a => a.city === name)?.slug }));
+
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: c.faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Areas we serve', item: site.url + '/areas-we-serve/' },
+    { '@type': 'ListItem', position: 3, name: c.city },
+  ] },
+  { '@context': 'https://schema.org', '@type': 'Service', name: `Masonry services in ${c.city}, FL`, serviceType: 'Masonry contractor', provider: { '@type': 'GeneralContractor', name: site.name }, areaServed: { '@type': 'City', name: c.city }, description: c.description },
+];
+const steps = [
+  { h: 'Enquiry received', p: 'You send your project details through the estimate form at the top of this page.' },
+  { h: 'Requirements reviewed', p: 'We read your description and look at your photos to understand what you need.' },
+  { h: 'Property and scope assessed', p: 'Where necessary, we ask follow-up questions or arrange to see the property.' },
+  { h: 'Estimate prepared', p: 'We explain the proposed work and give you the price in a written estimate.' },
+  { h: 'Agreed work carried out', p: 'Once you are happy to go ahead, the agreed project is completed.' },
+];
+const why = [
+  { h: 'Plain explanations', p: 'We explain what the work involves and why, so you can decide without needing to be an expert.' },
+  { h: 'Written estimates', p: 'Scope and price are put on paper so you can compare them with other quotes.' },
+  { h: 'Residential and commercial', p: 'We take on homeowner projects as well as commercial work.' },
+  { h: 'Attention to what you cannot see', p: 'Footings, reinforcement, moisture protection and drainage get as much care as the finished surface.' },
+];
+---
+<Base title={c.title} description={c.description} schema={schema} focus={true}>
+
+  <section class="hero service-hero" aria-labelledby="h1"><div class="wrap grid">
+    <div class="hero-copy">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/areas-we-serve/">Areas we serve</a> / {c.city}</nav>
+      <p class="hero-eyebrow">Masonry services in {c.city}, FL</p>
+      <h1 id="h1">Masonry Contractor in {c.city}, FL</h1>
+      <p class="lead">{c.hero.intro}</p>
+      <p class="lead lead-2">{c.hero.help}</p>
+      <ul class="points">
+        {c.hero.points.map((p, i) => (
+          <li>
+            {i === 0 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>}
+            {i === 1 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12zm0-9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>}
+            {i === 2 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3zm-2 9l3 3 6-6-1.4-1.4L10 12.2 8.4 10.6z"/></svg>}
+            {p}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <QuoteForm id="quote" heading="Get Your Free Estimate" showCity={false} cityValue={c.city} />
+  </div></section>
+
+  <section class="section"><div class="wrap sp-two">
+    <div class="sp-text">
+      <h2>{c.matters.h2}</h2>
+      {c.matters.paras.map(p => <p>{p}</p>)}
+    </div>
+    <figure class="sp-fig"><img src={c.img.src} alt={c.img.alt} width="500" height="400" loading="lazy" decoding="async" /></figure>
+  </div></section>
+
+  <section class="section alt"><div class="wrap">
+    <div class="sec-head"><h2>Our masonry services in {c.city}</h2><p>These are the kinds of projects that make the most sense for properties here. Each links to a page with more detail.</p></div>
+    <div class="sp-items">
+      {c.services.map(s => (
+        <article class="sp-item">
+          <h3><a href={`/${s.slug}/`}>{s.h}</a></h3>
+          <p>{s.p}</p>
+          <p class="sp-consider"><a href={`/${s.slug}/`}>More about {svcName(s.slug).toLowerCase()}</a></p>
+        </article>
+      ))}
+    </div>
+  </div></section>
+
+  <section class="section"><div class="wrap sp-two flip">
+    <figure class="sp-fig"><img src={c.img2.src} alt={c.img2.alt} width="500" height="400" loading="lazy" decoding="async" /></figure>
+    <div class="sp-text">
+      <h2>{c.right.h2}</h2>
+      {c.right.paras.map(p => <p>{p}</p>)}
+    </div>
+  </div></section>
+
+  <section class="section alt"><div class="wrap sp-narrow">
+    <h2>{c.places.h2}</h2>
+    {c.places.paras.map(p => <p>{p}</p>)}
+  </div></section>
+
+  <section class="section"><div class="wrap split">
+    <div class="panel res"><p class="eyebrow">Homeowners</p><h2>Residential masonry in {c.city}</h2><p>{c.residential}</p><p><a href="/residential-masonry/">Residential masonry services</a></p></div>
+    <div class="panel com"><p class="eyebrow">Businesses and managers</p><h2>Commercial masonry in {c.city}</h2><p>{c.commercial}</p><p><a href="/commercial-masonry/">Commercial masonry services</a></p></div>
+  </div></section>
+
+  <section class="section alt"><div class="wrap">
+    <div class="sec-head"><h2>What happens after you send your details</h2></div>
+    <ol class="process5">{steps.map(s => <li><h3>{s.h}</h3><p>{s.p}</p></li>)}</ol>
+  </div></section>
+
+  <section class="section dark"><div class="wrap">
+    <div class="sec-head"><h2>Why choose Masonry Pompano Beach</h2></div>
+    <div class="why">{why.map(w => <div><h3>{w.h}</h3><p>{w.p}</p></div>)}</div>
+  </div></section>
+
+  <section class="section"><div class="wrap sp-narrow">
+    <h2>Areas near {c.city} we also serve</h2>
+    <p>{c.nearby.intro}</p>
+    <ul class="pills">{nearbyLinks.map(n => <li>{n.slug ? <a href={`/${n.slug}/`}>{n.name}</a> : <span class="pill">{n.name}</span>}</li>)}</ul>
+    <p class="sp-aside">Our home base is Pompano Beach, and you can see every city we cover on the <a href="/areas-we-serve/">areas we serve</a> page. For an overview of what we do, visit the <a href="/">Masonry Pompano Beach homepage</a> or read <a href="/about/">about the company</a>.</p>
+  </div></section>
+
+  <section class="section alt"><div class="wrap sp-narrow">
+    <h2>Masonry questions from {c.city} property owners</h2>
+    {c.faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+  </div></section>
+
+  <section class="section"><div class="wrap sp-narrow">
+    <h2>{c.closing.h2}</h2>
+    {c.closing.paras.map(p => <p>{p}</p>)}
+  </div></section>
+</Base>

@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from './QuoteForm.astro';
+import { site, services, areaList } from '../data/site';
+import { content, defaultPoints, photos } from '../data/service-content';
+
+const { item } = Astro.props;
+const c = content[item.slug];
+const points = c.hero.points ?? defaultPoints;
+
+const title = item.title;
+const description = item.description;
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: c.faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/\s*\(TODO[^)]*\)/g, '') } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: site.url + '/services/' },
+    { '@type': 'ListItem', position: 3, name: item.name },
+  ] },
+  { '@context': 'https://schema.org', '@type': 'Service', name: item.h1, serviceType: item.name, provider: { '@type': 'GeneralContractor', name: site.name }, areaServed: 'Pompano Beach, FL', description },
+];
+const steps = [
+  { h: 'Enquiry received', p: 'You send your project details through the estimate form at the top of this page.' },
+  { h: 'Project review', p: 'We read your description and look at your photos to understand what you need.' },
+  { h: 'Assessment', p: 'We work out what is likely to be involved, and may ask follow-up questions or arrange to see the property.' },
+  { h: 'Estimate', p: 'We explain the proposed work and give you the price in a written estimate.' },
+  { h: 'Project completion', p: 'Once you are happy to go ahead, the agreed work is carried out.' },
+];
+const why = [
+  { h: 'Plain explanations', p: 'We explain what the work involves and why, so you can make decisions without needing to be an expert.' },
+  { h: 'Written estimates', p: 'The scope and the price are put on paper, so you can compare them with other quotes.' },
+  { h: 'Residential and commercial', p: 'We take on homeowner projects as well as commercial work.' },
+  { h: 'Local to Pompano Beach', p: 'We work in Pompano Beach and nearby Broward County, so local conditions are familiar.' },
+  { h: 'Attention to what you cannot see', p: 'Footings, reinforcement, moisture protection and drainage get as much attention as the finished surface.' },
+];
+---
+<Base title={title} description={description} schema={schema} focus={true}>
+
+  <!-- HERO: problem + service on the left, estimate form on the right -->
+  <section class="hero service-hero" aria-labelledby="h1"><div class="wrap grid">
+    <div class="hero-copy">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/services/">Services</a> / {item.name}</nav>
+      <p class="hero-eyebrow">{item.name} in Pompano Beach, FL</p>
+      <h1 id="h1">{item.h1}</h1>
+      <p class="lead">{c.hero.problem}</p>
+      <p class="lead lead-2">{c.hero.help}</p>
+      <ul class="points">
+        {points.map((p, i) => (
+          <li>
+            {i === 0 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>}
+            {i === 1 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12zm0-9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>}
+            {i === 2 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3zm-2 9l3 3 6-6-1.4-1.4L10 12.2 8.4 10.6z"/></svg>}
+            {p}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <QuoteForm id="quote" heading="Get Your Free Estimate" showCity={false} service={item.name} />
+  </div></section>
+
+  <!-- 1. Understand the problem -->
+  <section class="section"><div class="wrap sp-two">
+    <div class="sp-text">
+      <h2>{c.problem.h2}</h2>
+      {c.problem.paras.map(p => <p>{p}</p>)}
+      <h3>{c.problem.signsTitle}</h3>
+      <ul class="check">{c.problem.signs.map(s => <li>{s}</li>)}</ul>
+    </div>
+    <figure class="sp-fig"><img src={c.problem.img.src} alt={c.problem.img.alt} width="500" height="400" loading="lazy" decoding="async" /></figure>
+  </div></section>
+
+  <!-- 2. Introduction to the service -->
+  <section class="section alt"><div class="wrap sp-narrow">
+    <h2>{c.about.h2}</h2>
+    {c.about.paras.map(p => <p>{p}</p>)}
+    <p class="sp-aside">This is part of our <a href="/services/">masonry services in Pompano Beach</a>. If you are comparing options, you may also want to read about {c.related.map((r, i) => <><a href={`/${r.slug}/`}>{r.anchor}</a>{i < c.related.length - 2 ? ', ' : i === c.related.length - 2 ? ' and ' : ''}</>)}.</p>
+  </div></section>
+
+  <!-- 3. Main service breakdown -->
+  <section class="section"><div class="wrap">
+    <div class="sec-head"><h2>{c.breakdown.h2}</h2><p>{c.breakdown.intro}</p></div>
+    <div class="sp-items">
+      {c.breakdown.items.map(it => (
+        <article class="sp-item">
+          <h3>{it.h}</h3>
+          {it.paras.map(p => <p>{p}</p>)}
+          <p class="sp-consider"><strong>Worth considering:</strong> {it.consider}</p>
+        </article>
+      ))}
+    </div>
+  </div></section>
+
+  <!-- 4. Why workmanship matters -->
+  <section class="section alt"><div class="wrap sp-two flip">
+    <figure class="sp-fig"><img src={c.why.img.src} alt={c.why.img.alt} width="500" height="400" loading="lazy" decoding="async" /></figure>
+    <div class="sp-text">
+      <h2>{c.why.h2}</h2>
+      {c.why.paras.map(p => <p>{p}</p>)}
+    </div>
+  </div></section>
+
+  <!-- 5. Process -->
+  <section class="section"><div class="wrap">
+    <div class="sec-head"><h2>What happens after you send your details</h2></div>
+    <ol class="process5">{steps.map(s => <li><h3>{s.h}</h3><p>{s.p}</p></li>)}</ol>
+  </div></section>
+
+  <!-- 6. Materials and options -->
+  <section class="section alt"><div class="wrap">
+    <div class="sec-head"><h2>{c.materials.h2}</h2><p>{c.materials.intro}</p></div>
+    <div class="sp-options">
+      {c.materials.items.map(m => <article><h3>{m.h}</h3><p>{m.p}</p></article>)}
+    </div>
+  </div></section>
+
+  <!-- 8. Why choose us -->
+  <section class="section dark"><div class="wrap">
+    <div class="sec-head"><h2>Why property owners in Pompano Beach consider us</h2></div>
+    <div class="why">{why.map(w => <div><h3>{w.h}</h3><p>{w.p}</p></div>)}</div>
+  </div></section>
+
+  <!-- 9. Service areas -->
+  <section class="section"><div class="wrap sp-narrow">
+    <h2>Where we do {item.name.toLowerCase()}</h2>
+    <p>We are based in {site.address.city} and take projects in the cities within roughly a 30-minute drive, across Broward County and into southern Palm Beach County.</p>
+    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
+  </div></section>
+
+  <!-- 10. FAQs -->
+  <section class="section alt"><div class="wrap sp-narrow">
+    <h2>Questions about {item.name.toLowerCase()}</h2>
+    {c.faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+  </div></section>
+
+  <!-- 11. Closing -->
+  <section class="section"><div class="wrap sp-narrow">
+    <h2>{c.closing.h2}</h2>
+    {c.closing.paras.map(p => <p>{p}</p>)}
+    <h3>Related services</h3>
+    <ul class="sp-related">
+      {c.related.map(r => <li><a href={`/${r.slug}/`}>{r.anchor[0].toUpperCase() + r.anchor.slice(1)}</a>: {r.why}</li>)}
+      <li><a href="/services/">All masonry services</a> and <a href="/about/">about the company</a></li>
+    </ul>
+  </div></section>
+</Base>

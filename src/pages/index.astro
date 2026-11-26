@@ -1,0 +1,222 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, services, areaList, images } from '../data/site';
+
+// ---------- Section data ----------
+const svcOrder = ['brick-masonry', 'block-masonry', 'masonry-repair', 'stone-masonry', 'retaining-walls', 'commercial-masonry'];
+const svcCopy: Record<string, string> = {
+  'brick-masonry': 'New brickwork, veneer, columns and matching repairs that blend with your existing property.',
+  'block-masonry': 'Reinforced concrete block for additions, garages and structures, built to Florida wind-load requirements.',
+  'masonry-repair': 'Brick repair, block wall repair and tuckpointing for cracked, spalling or water-damaged masonry, diagnosed properly and repaired to last.',
+  'stone-masonry': 'Natural and manufactured stone veneer, outdoor kitchens and feature walls.',
+  'retaining-walls': 'Block and stone retaining walls with the footing and drainage they need to stay put.',
+  'commercial-masonry': 'Block and brick work for GCs, developers, property managers and associations.',
+};
+const cards = svcOrder.map(slug => services.find(s => s.slug === slug)!).filter(Boolean);
+
+const why = [
+  { h: 'You get the price in writing', p: 'Every estimate is itemized, covering materials, labor, permits and finish, so you can compare us to other quotes line by line.' },
+  { h: 'Built for South Florida conditions', p: 'Salt air, humidity and hurricane wind loads shape how we reinforce, waterproof and finish masonry here.' },
+  { h: 'We handle permits and inspections', p: 'Structural work in Broward County needs permits. We take care of the paperwork and inspection scheduling.' },
+  { h: 'You know what is happening', p: 'You get one point of contact and a clear schedule, so you are not left chasing updates.' },
+  { h: 'One company for homes and commercial sites', p: 'The same crews and standards for a backyard wall or a commercial block shell.' },
+  { h: 'Repairs diagnosed, not patched', p: 'We look for the cause of the cracking or spalling first, so the repair does not fail again in a year.' },
+];
+
+const steps = [
+  { h: 'Get in touch', p: 'Send the short estimate form. Photos help, but they are optional.' },
+  { h: 'Discuss your project', p: 'We talk through what you need and, where useful, visit the property to measure and check access.' },
+  { h: 'Receive an estimate', p: 'We explain the proposed work and give you a written, itemized estimate.' },
+  { h: 'Get your project underway', p: 'Once you approve, we confirm permits and the schedule, then start the work.' },
+];
+
+const info = [
+  { h: 'Choosing the right masonry material', p: 'Brick offers a classic look and good durability. Concrete block is strong and economical for structures and walls, and is usually finished with stucco or paint. Stone gives a premium finish and costs more to install. The right choice depends on the structure, budget and the look you want.', href: '/block-masonry/', l: 'Compare block and brick services' },
+  { h: 'Understanding masonry project costs', p: 'Cost depends on project size, materials, labor, site access, preparation and complexity. Repairs vary with how much damage there is. A site visit and written estimate is the only reliable way to price your project.', href: '/#estimate', l: 'Ask for an estimate' },
+  { h: 'Repair or replace?', p: 'Small cracks, loose mortar and isolated spalling can often be repaired. Widespread damage, structural movement or repeated failures may mean rebuilding that section is the better long-term choice.', href: '/masonry-repair/', l: 'See masonry repair' },
+  { h: 'What to look for when hiring a masonry contractor', p: 'Ask how the job will be scheduled, what is included and insist on a written estimate that lists the full scope.', href: '/about/', l: 'About our company' },
+];
+
+const faqs = [
+  { q: 'What masonry services do you offer in Pompano Beach?', a: 'We build and repair brick, concrete block and stone masonry, including brickwork, block walls, retaining walls, tuckpointing and masonry repairs, and commercial masonry. See the services list for details.' },
+  { q: 'Do you provide residential and commercial masonry?', a: 'Yes, for homeowners and for general contractors, property managers and associations.' },
+  { q: 'Do you offer free masonry estimates?', a: 'Yes. Send the estimate form and we will arrange an estimate.' },
+  { q: 'How much does masonry work cost in Pompano Beach?', a: 'It depends on size, materials, labor, site conditions and complexity, so we price each job after reviewing the details. We do not quote blind.' },
+  { q: 'Can you repair existing brick and concrete block walls?', a: 'Yes. We repair cracks, damaged mortar joints, spalling and water damage, and match the existing materials as closely as possible.' },
+  { q: 'How long does a typical masonry project take?', a: 'Small repairs may take a day or two. Walls, additions and larger builds take longer and depend on permits and weather. We give you a schedule with the estimate.' },
+  { q: 'What masonry materials do you work with?', a: 'Brick, concrete block (CMU), natural and manufactured stone, mortar, grout, rebar and stucco finishes.' },
+  { q: 'Do you serve areas outside Pompano Beach?', a: 'Yes. We work in the cities within roughly a 30-minute drive of Pompano Beach, across Broward County and into southern Palm Beach County. See the service areas section for the list.' },
+  { q: 'How can I arrange an estimate?', a: `Use the estimate form on this page. Tell us what you need, describe the job and, if you can, attach a photo.${site.showPhone ? ` You can also call ${site.phone}.` : ''}` },
+];
+
+
+// ---------- Service walkthrough (typical cost ranges are market estimates: OWNER MUST CONFIRM) ----------
+const walk = [
+  { slug: 'block-masonry', t: 'Block Masonry (CBS)', cost: 'In Florida, a finished block (CBS) addition runs about $175 to $400+ per sq ft of living space; the block shell alone is roughly $90 to $160 per sq ft', p: 'Reinforced concrete block is the backbone of most South Florida homes and additions. Walls need rebar, grout and tie beams that meet hurricane-zone code, so price depends on height, openings and engineering.' },
+  { slug: 'concrete-block-walls', t: 'Block Walls and Privacy Walls', cost: 'Florida reinforced, grouted block walls run about $16 to $28 per sq ft of wall (about $95 to $170 per linear foot for a 6 ft wall); stucco adds about $6 to $11 per sq ft', p: 'Perimeter, privacy and pool walls with proper footings and reinforcement. Height, length, gates and finish drive the cost, and many walls need a permit.' },
+  { slug: 'brick-masonry', t: 'Brick Masonry', cost: 'About $8 to $24 per sq ft for brick veneer (national range); full structural brick costs more', p: 'New brick walls, columns, steps and veneer, with matching brick for repairs. The price moves with brick type, pattern and how much detail the job needs.' },
+  { slug: 'masonry-repair', t: 'Masonry Repair', cost: 'South Florida stucco and block repair about $8 to $50 per sq ft depending on damage; minor crack repair from about $200; tuckpointing about $5 to $25 per sq ft', p: 'Cracks, spalling, loose mortar and water damage. Salt air and moisture here rust the rebar inside block, so we find the cause first and repair it properly.' },
+  { slug: 'stone-masonry', t: 'Stone Masonry', cost: 'About $13 to $35 per sq ft installed, depending on the stone (national range)', p: 'Natural and manufactured stone veneer for walls, columns, outdoor kitchens and fireplaces. Natural stone costs more and is heavier to install.' },
+  { slug: 'retaining-walls', t: 'Retaining Walls', cost: 'About $35 to $50 per sq ft of wall face in the Miami to Fort Lauderdale area; taller walls need engineering', p: 'Block and stone walls that hold soil, built with the footing and drainage that stop them leaning or cracking. Walls over a few feet usually need engineering.' },
+  { slug: 'commercial-masonry', t: 'Commercial Masonry', cost: 'Priced per project from your plans and scope', p: 'Block shells, brick, restoration and repair for GCs, property managers and associations. Send plans or a scope and we will price it as a bid.' },
+];
+
+const title = `Masonry Contractor Pompano Beach, FL | ${site.shortName}`;
+const description = 'Looking for a masonry contractor in Pompano Beach, FL? Explore professional brick, block and masonry services for residential and commercial projects. Request an estimate.';
+
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/\s*\]*\)/g, '') } })) },
+  { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: site.url + '/', about: 'Masonry contractor in Pompano Beach, FL' },
+  { '@context': 'https://schema.org', '@type': 'OfferCatalog', name: 'Masonry services', itemListElement: cards.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, url: `${site.url}/${s.slug}/` } })) },
+];
+---
+<Base title={title} description={description} schema={schema}>
+
+  <!-- 2. HERO -->
+  <section class={`hero${images.hero ? " has-photo" : ""}`} style={images.hero ? `--hero-photo:url(${images.hero})` : undefined} aria-labelledby="h1"><div class="wrap grid">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Masonry contractor in Pompano Beach, FL</p>
+      <h1 id="h1">Professional Masonry Services in Pompano Beach</h1>
+      <p class="lead">Brick, block and stone masonry for homes and commercial properties in Pompano Beach and nearby Broward County, from new walls and additions to repairs.</p>
+      <ul class="points">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Residential and commercial masonry</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12zm0-9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>Serving Pompano Beach and surrounding areas</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3zm-2 9l3 3 6-6-1.4-1.4L10 12.2 8.4 10.6z"/></svg>Free project estimates</li>
+      </ul>
+      <div class="actions">
+        <a class="btn" href="#quote">Request a Free Estimate</a>
+        {site.showPhone && <a class="btn call" href={`tel:${site.phoneHref}`}>Call {site.phone}</a>}
+      </div>
+    </div>
+    <QuoteForm id="quote" heading="Get Your Free Estimate" showCity={false} />
+  </div></section>
+
+  <!-- 3. TRUST BAR -->
+  <section class="trustbar" aria-label="Why you can trust us"><div class="wrap"><ul>
+    <li>Locally serving Pompano Beach<small>and nearby Broward cities</small></li>
+    <li>Residential &amp; commercial<small>one team for both</small></li>
+    <li>Free estimates<small>Send the form to get started</small></li>
+  </ul></div></section>
+
+  <!-- 4. SERVICES -->
+  <section class="section" id="services"><div class="wrap">
+    <div class="sec-head">
+      <h2>Masonry Services for Your Home or Business</h2>
+      <p>From new brick and block construction to repairs on existing walls, we handle the masonry construction, repairs and building projects property owners in Pompano Beach ask for most. As a local masonry company, we cover brickwork, block work, stone and repointing under one roof.</p>
+    </div>
+    <div class="svc-grid">
+      {cards.map(s => (
+        <article class="svc">
+          {images.services[s.slug]
+            ? <img src={images.services[s.slug].src} alt={images.services[s.slug].alt} width="500" height="400" loading="lazy" decoding="async" />
+            : <div class="ph" role="img" aria-label={`Placeholder for ${s.name} photo`}>{s.name} photo<br />(replace with real project)</div>}
+          <div class="body">
+            <h3><a href={`/${s.slug}/`}>{s.name}</a></h3>
+            <p>{svcCopy[s.slug]}</p>
+            <a class="more" href={`/${s.slug}/`}>{s.name} in Pompano Beach →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p style="margin-top:20px"><a href="/services/">See all masonry services →</a></p>
+  </div></section>
+
+  <CtaBand />
+
+  <!-- 5. WHY CHOOSE US -->
+  <section class="section dark" id="why"><div class="wrap">
+    <div class="sec-head"><h2>Why Pompano Beach Property Owners Choose Us</h2></div>
+    <div class="why">
+      {why.map(w => <div><h3>{w.h}</h3><p>{w.p}</p></div>)}
+    </div>
+  </div></section>
+
+  <!-- 7. RESIDENTIAL / COMMERCIAL -->
+  <section class="section alt" id="who"><div class="wrap split">
+    <div class="panel res">
+      <p class="eyebrow">For homeowners</p>
+      <h2>Residential Masonry</h2>
+      <p>Whether a wall is cracking, a repair keeps coming back or you are planning something new, we help homeowners with block and brick walls, additions, retaining walls, stone features and outdoor living projects.</p>
+      <ul class="check"><li>Repairs to cracked, spalling or water-damaged masonry</li><li>New block and brick walls</li><li>Retaining walls and stone features</li></ul>
+      <a class="btn" href="/residential-masonry/">Residential masonry services</a>
+    </div>
+    <div class="panel com">
+      <p class="eyebrow">For businesses and contractors</p>
+      <h2>Commercial Masonry</h2>
+      <p>General contractors, developers and property managers need clear scopes, reliable scheduling and proper documentation. We work from your plans, and communicate on progress.</p>
+      <ul class="check"><li>Block shells and structural masonry</li><li>Restoration and repair for condos, HOAs and commercial properties</li><li>Bid support and documentation on request</li></ul>
+      <a class="btn ghost" href="/commercial-masonry/">Commercial masonry services</a>
+    </div>
+  </div></section>
+
+  <CtaBand lead="Not sure which service fits?" />
+
+  <!-- 8. PROCESS -->
+  <section class="section" id="process"><div class="wrap">
+    <div class="sec-head"><h2>Getting Started With Your Masonry Project Is Easy</h2></div>
+    <ol class="process4">{steps.map(s => <li><h3>{s.h}</h3><p>{s.p}</p></li>)}</ol>
+  </div></section>
+
+  <!-- 8b. SERVICES WALKTHROUGH + TYPICAL COSTS -->
+  <section class="section alt" id="costs"><div class="wrap">
+    <div class="sec-head">
+      <h2>Our Masonry Services and What They Typically Cost in Florida</h2>
+      <p>A quick guide to what we build and repair, with typical Florida prices so you know what to expect before you ask for a quote.</p>
+    </div>
+    <div class="walk">
+      {walk.map((w, i) => (
+        <article class={`walk-row${i % 2 ? ' flip' : ''}`}>
+          <div class="walk-img">
+            {images.walk[w.slug]
+              ? <img src={images.walk[w.slug].src} alt={images.walk[w.slug].alt} width="500" height="400" loading="lazy" decoding="async" />
+              : <div class="ph" role="img" aria-label={`Placeholder for ${w.t} photo`}>{w.t} photo<br />(replace with real project)</div>}
+          </div>
+          <div class="walk-text">
+            <h3><a href={`/${w.slug}/`}>{w.t}</a></h3>
+            <p>{w.p}</p>
+            <p class="cost"><strong>Typical cost:</strong> {w.cost}.</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="fine">Prices are typical ranges and vary with size, access, materials, permits and site conditions. Every project is quoted in writing after we see the details.</p>
+  </div></section>
+
+  <!-- 10. SERVICE AREAS -->
+  <section class="section" id="areas"><div class="wrap areas">
+    <div>
+      <h2>Your Local Masonry Contractor Serving Pompano Beach and Surrounding Areas</h2>
+      <p>As a local masonry contractor based in {site.address.city}, we take projects in the cities within roughly a 30-minute drive, across Broward County and into southern Palm Beach County. Choose a city to see local information.</p>
+    </div>
+    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
+  </div></section>
+
+  <CtaBand lead="Have a job in mind?" />
+
+  <!-- 11. HELPFUL INFORMATION -->
+  <section class="section alt" id="guide"><div class="wrap">
+    <div class="sec-head"><h2>Planning a Masonry Project? Here's What You Should Know</h2></div>
+    <div class="info">
+      {info.map(i => <article><h3>{i.h}</h3><p>{i.p}</p><a href={i.href}>{i.l} →</a></article>)}
+    </div>
+  </div></section>
+
+  <!-- 12. FAQ -->
+  <section class="section" id="faq"><div class="wrap" style="max-width:820px">
+    <h2>Frequently Asked Questions About Our Masonry Services</h2>
+    {faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+  </div></section>
+
+  <!-- 13. FINAL CTA + FORM -->
+  <section class="section cta-final" id="estimate"><div class="wrap two">
+    <div>
+      <h2>Ready to Start Your Masonry Project?</h2>
+      <p>Whether you need masonry repairs, new brickwork, block construction or another masonry service, get in touch to discuss your project and arrange an estimate.</p>
+      {site.showPhone && <p><a class="phone-big" href={`tel:${site.phoneHref}`}>{site.phone}</a></p>}
+      <p>{site.hours}</p>
+    </div>
+    <QuoteForm id="estimate-form" heading="Request Your Estimate" showCity={false} />
+  </div></section>
+</Base>

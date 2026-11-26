@@ -1,0 +1,101 @@
+---
+import '@fontsource/barlow-condensed/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '../styles/global.css';
+import { site, services, locations, areaList, social, mainServiceSlugs } from '../data/site';
+const { title, description, schema = [], noindex = false, focus = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const business = {
+  '@context': 'https://schema.org',
+  '@type': ['GeneralContractor', 'LocalBusiness'],
+  name: site.name,
+  url: site.url,
+  logo: site.url + '/images/logo-512.png',
+  image: site.url + '/images/logo-512.png',
+  ...(site.showPhone ? { telephone: site.phone } : {}),
+  ...(site.showEmail ? { email: site.email } : {}),
+  address: site.showAddress
+    ? { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.state, postalCode: site.address.zip, addressCountry: 'US' }
+    : { '@type': 'PostalAddress', addressLocality: 'Pompano Beach', addressRegion: 'FL', addressCountry: 'US' },
+  areaServed: areaList.map(a => ({ '@type': 'City', name: a.city })),
+  priceRange: '$$',
+};
+const nav = [
+  ['Services', '/services/'], ['Areas', '/areas-we-serve/'],
+  ['About', '/about/'], ['Contact', '/contact/'],
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex,follow" />}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta name="theme-color" content="#FFFFFF" />
+  <link rel="icon" href="/images/favicon-64.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/images/logo-512.png" />
+  <script type="application/ld+json" set:html={JSON.stringify(business)} />
+  {schema.map(s => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site"><div class="wrap">
+    <a class="brand" href="/"><img src="/images/logo-112.webp" alt="" width="44" height="44" /><span>{site.name}</span></a>
+    <nav class="main" id="nav" aria-label="Main">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li class="has-dd">
+          <a href="/services/">Services</a>
+          <ul class="dd">
+            {services.map(s => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
+          </ul>
+        </li>
+        {nav.filter(([t]) => t !== 'Services').map(([t, h]) => <li><a href={h}>{t}</a></li>)}
+      </ul>
+    </nav>
+    <div class="hdr-cta">
+      {site.showPhone && <a class="btn call hdr-call" href={`tel:${site.phoneHref}`} aria-label={`Call ${site.phone}`}>Call<span class="num">&nbsp;{site.phone}</span></a>}
+      {!focus && <a class="btn est" href="/#quote">Get Your Free Quote</a>}
+      <button class="menu-btn" aria-controls="nav" aria-expanded="false" id="mb">Menu</button>
+    </div>
+  </div></header>
+  <main id="main"><slot /></main>
+  <footer class="site"><div class="wrap">
+    <div class="cols">
+      <div><img class="foot-logo" src="/images/logo-112.webp" alt={`${site.name} logo`} width="72" height="72" loading="lazy" /><h3>{site.name}</h3>
+        <p>Masonry contractor serving Pompano Beach and Broward County.</p>
+        {site.showAddress && <p>{site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}</p>}
+        {(site.showPhone || site.showEmail) && <p>{site.showPhone && <><a href={`tel:${site.phoneHref}`}>{site.phone}</a><br /></>}{site.showEmail && <a href={`mailto:${site.email}`}>{site.email}</a>}</p>}
+        {site.showHours && <p>{site.hours}</p>}
+        {social.length > 0 && <p>{social.map(s => <a href={s.href} rel="noopener">{s.name}</a>).reduce((a, b) => [a, ' · ', b])}</p>}</div>
+      <div><h3>Services</h3><ul>
+        {services.filter(s => mainServiceSlugs.includes(s.slug)).map(s => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
+        <li><a href="/services/">All services</a></li></ul></div>
+      <div><h3>Service areas</h3><ul>
+        {locations.slice(0, 6).map(l => <li><a href={`/${l.slug}/`}>{l.city}</a></li>)}
+        <li><a href="/areas-we-serve/">All areas</a></li></ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li><li><a href="/our-process/">Our process</a></li>
+        <li><a href="/areas-we-serve/">Areas we serve</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="legal">© {new Date().getFullYear()} {site.name}. All rights reserved. <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></div>
+  </div></footer>
+  {!focus &&   <div class="stickybar" role="region" aria-label="Quick contact">
+    {site.showPhone && <a class="call" href={`tel:${site.phoneHref}`}>Call Now</a>}
+    <a class="p" href="/#quote">Get Your Free Quote</a>
+  </div>}
+  <script is:inline>
+    var b=document.getElementById('mb'),n=document.getElementById('nav');
+    b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o)});
+  </script>
+</body>
+</html>

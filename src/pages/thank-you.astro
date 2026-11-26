@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+<Base title="Thank You" description="We received your request." noindex={true}>
+  <section class="section"><div class="wrap" style="max-width:700px"><h1>Thank you</h1><p>Your request has been received.{site.responseTime && ` ${site.responseTime}.`}{site.showPhone && <> Need it sooner? Call <a href={`tel:${site.phoneHref}`}>{site.phone}</a>.</>}</p></div></section>
+</Base>

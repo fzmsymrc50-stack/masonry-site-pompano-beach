@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site, services, locations, areaList } from '../data/site';
+import { photos, defaultPoints } from '../data/service-content';
+
+const title = 'About Masonry Pompano Beach | Masonry Contractor in Pompano Beach, FL';
+const description = 'Meet Masonry Pompano Beach: a masonry contractor serving homeowners and commercial properties in Pompano Beach and nearby Broward County. See how we work and request an estimate.';
+
+const beliefs = [
+  { h: 'Doing the work properly', p: 'In masonry, the parts nobody sees decide how the part everybody sees will age. That means a footing sized for the job, reinforcement where the plans call for it, mortar and materials that suit the wall and a surface that is finished and protected from moisture. We would rather explain why those steps matter than skip them.' },
+  { h: 'Clear communication', p: 'You should know what is going to happen and why. In practice that means plain-language answers to your questions, a written scope you can read and no jargon used to hide a gap in the explanation. If something unexpected turns up, you hear about it from us.' },
+  { h: 'Respect for the property', p: 'A home or a commercial building is somebody\'s investment. Treating it with respect means understanding access and surroundings before work starts, protecting what is next to the work and leaving the site tidy.' },
+  { h: 'Honest estimates', p: 'A good estimate lists what is included, so you can compare it with other quotes line by line. We would rather give you a realistic written estimate after looking at the details than a vague number over the phone.' },
+  { h: 'Pride in the finish', p: 'Straight lines, clean joints, a neat corner and a surface that matches its surroundings are what you notice every day. Taking care with those details is part of the job, not an extra.' },
+];
+
+const expertise = [
+  { slug: 'brick-masonry', t: 'Brick', p: 'New brickwork, veneer, columns and steps, and repairs that need to blend with what is already there.' },
+  { slug: 'block-masonry', t: 'Concrete block', p: 'Reinforced block for additions, garages and structures, plus privacy and boundary walls.' },
+  { slug: 'masonry-repair', t: 'Repair', p: 'Cracks, spalling, failing mortar and water damage, with attention to the cause, not only the symptom.' },
+  { slug: 'stone-masonry', t: 'Stone', p: 'Natural and manufactured stone veneer for walls, columns and outdoor features.' },
+  { slug: 'retaining-walls', t: 'Retaining walls', p: 'Walls that hold soil, built with a solid base and drainage behind them.' },
+  { slug: 'commercial-masonry', t: 'Commercial', p: 'Masonry for businesses, associations and property managers, priced from plans or a scope.' },
+];
+
+const stages = [
+  { h: 'Understanding what you need', p: 'It starts with your description and any photos. The better we understand the problem or the idea, the more useful everything after that will be.' },
+  { h: 'Discussing the project', p: 'We may ask follow-up questions about size, access, materials and what is there now. These details change the work, and we would rather ask than assume.' },
+  { h: 'Assessing the scope', p: 'Where needed, we look at the property or the plans to work out what is involved. This is where hidden issues, such as moisture or movement, tend to show up.' },
+  { h: 'Preparing the estimate', p: 'You get the proposed work and the price in writing, so you can read it, compare it and ask questions.' },
+  { h: 'Planning the work', p: 'Once you decide to go ahead, we sort out what needs to happen first, including any permits that apply and how the site will be accessed.' },
+  { h: 'Completing the agreed project', p: 'We carry out the work that was agreed. If something changes along the way, we tell you and explain the options.' },
+  { h: 'Reviewing the finished work', p: 'We look over the result with you so any final details are dealt with before the job is closed out.' },
+];
+
+const faqs = [
+  { q: 'What types of masonry work does Masonry Pompano Beach provide?', a: 'We work with brick, concrete block and stone. That covers new walls and additions, privacy and boundary walls, retaining walls, masonry repair and commercial masonry. The services pages explain each one.' },
+  { q: 'Do you work on residential and commercial properties?', a: 'Yes. We take homeowner projects as well as commercial work for property owners, managers and contractors.' },
+  { q: 'What areas do you serve?', a: 'We are based in Pompano Beach and take projects in the cities within roughly a 30-minute drive, across Broward County and into southern Palm Beach County. The areas page lists them.' },
+  { q: 'How do I request an estimate?', a: 'Use the form at the top of this page. Give us your name and phone number, choose the type of work, describe the job and attach photos if you can.' },
+  { q: 'Can I send photos of my project?', a: 'Yes. The form has a photo upload, and photos are one of the most useful things you can send.' },
+  { q: 'How do I know which service I need?', a: 'You do not have to. Choose the closest option, or "Not sure", and describe what you can see or what you want. We will point you to the right service.' },
+  { q: 'What should I include when I request an estimate?', a: 'Where the property is, roughly how big the area is (length and height for a wall), what is there now, what you would like done and any photos. For commercial work, plans or a scope help.' },
+  { q: 'What happens after I submit an enquiry?', a: 'We review your details and may ask follow-up questions. We then explain the proposed work and give you a written estimate. We do not promise a particular response time here, so you know exactly what to expect.' },
+];
+
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'AboutPage', name: title, description, url: site.url + '/about/', about: { '@type': 'GeneralContractor', name: site.name, url: site.url } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'About' },
+  ] },
+];
+---
+<Base title={title} description={description} schema={schema} focus={true}>
+
+  <section class="hero service-hero" aria-labelledby="h1"><div class="wrap grid">
+    <div class="hero-copy">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / About</nav>
+      <p class="hero-eyebrow">About Masonry Pompano Beach</p>
+      <h1 id="h1">A Masonry Contractor You Can Feel Confident Hiring</h1>
+      <p class="lead">Masonry Pompano Beach helps property owners with brick, block and stone work, from new walls and additions to repairs on masonry that has seen better days. We are based in Pompano Beach and work with homeowners as well as commercial properties across the area.</p>
+      <p class="lead lead-2">Our approach is simple: understand the job properly, explain it plainly, put the estimate in writing and do the work with care. If that sounds like what you are looking for, you can send your project details in the form.</p>
+      <ul class="points">
+        {defaultPoints.map((p, i) => (
+          <li>
+            {i === 0 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>}
+            {i === 1 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12zm0-9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>}
+            {i === 2 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3zm-2 9l3 3 6-6-1.4-1.4L10 12.2 8.4 10.6z"/></svg>}
+            {p}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <QuoteForm id="quote" heading="Get Your Free Estimate" showCity={false} />
+  </div></section>
+
+  <!-- 2. Our story: purpose and approach (no invented history) -->
+  <section class="section"><div class="wrap sp-two">
+    <div class="sp-text">
+      <h2>Why we do this</h2>
+      <p>Masonry is one of those trades where it is hard to judge quality at the time you hire someone. A wall looks fine on the day it is finished. Whether the footing is right, the steel is where it should be and the finish is protected from moisture only shows up years later.</p>
+      <p>That is the idea behind Masonry Pompano Beach: to be a contractor property owners can understand and trust before the work begins. We focus on masonry, so brick, block and stone, and we try to explain the job well enough that you could judge the estimate for yourself.</p>
+      <p>What we want you to experience is a straightforward process: a clear conversation about the problem or the idea, an estimate you can read and work that matches what was agreed. We would like to be known for doing masonry properly and for being easy to deal with.</p>
+    </div>
+    <figure class="sp-fig"><img src={photos.blockTexture.src} alt={photos.blockTexture.alt} width="500" height="400" loading="lazy" decoding="async" /></figure>
+  </div></section>
+
+  <!-- 3. What we believe in -->
+  <section class="section alt"><div class="wrap">
+    <div class="sec-head"><h2>What we believe in, and what it means in practice</h2><p>These are not slogans. Each one describes something you can reasonably expect when you work with us.</p></div>
+    <div class="sp-items">
+      {beliefs.map(b => <article class="sp-item"><h3>{b.h}</h3><p>{b.p}</p></article>)}
+    </div>
+  </div></section>
+
+  <!-- 4. Expertise -->
+  <section class="section"><div class="wrap">
+    <div class="sec-head"><h2>The masonry work we take on</h2><p>We work across the main masonry materials and the jobs people most often need done. Each one has its own page with detail.</p></div>
+    <div class="sp-options">
+      {expertise.map(e => <article><h3><a href={`/${e.slug}/`}>{e.t}</a></h3><p>{e.p}</p></article>)}
+    </div>
+    <p class="sp-aside" style="max-width:48rem">Taken together, that means we can look at a property and tell you whether the answer is a repair, a rebuild or something new, and explain why. You can see the full list on the <a href="/services/">masonry services</a> page, including <a href="/concrete-block-walls/">block walls</a>, <a href="/brick-walls/">brick walls</a> and <a href="/residential-masonry/">residential masonry</a>.</p>
+  </div></section>
+
+  <!-- 5. Approach -->
+  <section class="section alt"><div class="wrap">
+    <div class="sec-head"><h2>How we approach every project</h2><p>The same steps apply whether the job is a small repair or a larger build. Here is what each one is for.</p></div>
+    <ol class="stages">{stages.map(s => <li><h3>{s.h}</h3><p>{s.p}</p></li>)}</ol>
+  </div></section>
+
+  <!-- 6. Who we work with -->
+  <section class="section"><div class="wrap split">
+    <div class="panel res">
+      <p class="eyebrow">Homeowners</p>
+      <h2>Homeowners</h2>
+      <p>Most homeowners come to us with a problem or a plan: a wall that is cracking, a repair that keeps coming back, a privacy wall, an addition or an outdoor feature. We explain what the work involves, what the options are and what each is likely to mean for your property, then put the estimate in writing.</p>
+      <p><a href="/residential-masonry/">Residential masonry</a> and <a href="/masonry-repair/">masonry repair</a> cover most of these jobs.</p>
+    </div>
+    <div class="panel com">
+      <p class="eyebrow">Businesses and builders</p>
+      <h2>Commercial owners, managers and contractors</h2>
+      <p>For commercial properties, associations and general contractors, the questions are about scope, coordination and reliability. We work from plans or a clear scope, and we keep communication straightforward so you can plan around the work.</p>
+      <p>See <a href="/commercial-masonry/">commercial masonry</a> and <a href="/block-masonry/">block masonry</a> for more.</p>
+    </div>
+  </div></section>
+
+  <!-- 7. Confidence -->
+  <section class="section dark"><div class="wrap">
+    <div class="sec-head"><h2>What customers tend to worry about, and how we deal with it</h2></div>
+    <div class="why">
+      <div><h3>"Will I understand what is going on?"</h3><p>We explain the work in plain language and put the scope and price in a written estimate, so nothing depends on memory.</p></div>
+      <div><h3>"Will they treat my property with care?"</h3><p>We look at access and surroundings before work starts, and we ask about anything that needs protecting.</p></div>
+      <div><h3>"Will it last?"</h3><p>Lasting masonry comes from preparation: footings, reinforcement, drainage and moisture protection. We talk about those before we talk about finishes.</p></div>
+      <div><h3>"Is the price realistic?"</h3><p>We would rather review the details and give a written estimate than guess. You can then compare it with other quotes.</p></div>
+      <div><h3>"Can they handle my kind of project?"</h3><p>We take homeowner and commercial jobs in brick, block and stone. If a job is outside what we do, we will say so.</p></div>
+    </div>
+  </div></section>
+
+  <!-- 8. Pompano Beach and South Florida -->
+  <section class="section"><div class="wrap sp-narrow">
+    <h2>Rooted in Pompano Beach and South Florida</h2>
+    <p>We are based in Pompano Beach and know the area the way you do: Atlantic Boulevard, Federal Highway, Sample Road and the neighbourhoods and canals in between. Pompano Beach is in Broward County, where new walls and structures are built with South Florida's wind and moisture in mind, and where salt air and humidity wear on masonry faster than in many places.</p>
+    <p>That context shapes how we talk about materials, drainage and maintenance. A privacy wall, a repair on an older home or a retaining wall near a canal each calls for different decisions, and we try to explain them in terms of your property.</p>
+    <p>We also work in the cities around Pompano Beach, including <a href="/masonry-contractor-lighthouse-point-fl/">Lighthouse Point</a>, <a href="/masonry-contractor-deerfield-beach-fl/">Deerfield Beach</a>, <a href="/masonry-contractor-fort-lauderdale-fl/">Fort Lauderdale</a>, <a href="/masonry-contractor-coconut-creek-fl/">Coconut Creek</a> and <a href="/masonry-contractor-coral-springs-fl/">Coral Springs</a>. The <a href="/areas-we-serve/">areas we serve</a> page lists every city within roughly a 30-minute drive.</p>
+  </div></section>
+
+  <!-- 10. FAQ -->
+  <section class="section alt"><div class="wrap sp-narrow">
+    <h2>Questions about Masonry Pompano Beach</h2>
+    {faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+  </div></section>
+
+  <!-- 11. Conclusion -->
+  <section class="section"><div class="wrap sp-narrow">
+    <h2>Choosing the right contractor</h2>
+    <p>Hiring a masonry contractor is partly about the work and partly about whether you trust the person doing it. We try to earn that trust the practical way: by listening to what you need, being honest about what the job involves and putting the estimate in writing.</p>
+    <p>If you have a wall to build, a repair to sort out or a project you are still thinking through, send the details in the form at the top of this page. Even a rough description and a photo is enough to start the conversation.</p>
+  </div></section>
+</Base>

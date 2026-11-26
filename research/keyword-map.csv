@@ -1,0 +1,24 @@
+cluster,keyword,intent,target_url,volume,difficulty,status
+Primary commercial,masonry contractor pompano beach,commercial,/,unverified,unverified,planned
+Primary commercial,masonry company pompano beach,commercial,/,unverified,unverified,planned
+Primary commercial,masonry contractors pompano beach fl,commercial,/,unverified,unverified,planned
+Primary commercial,masonry services pompano beach,commercial,/,unverified,unverified,planned
+Primary commercial,masonry construction pompano beach,commercial,/masonry-construction/,unverified,unverified,planned
+Primary commercial,masonry near me / masonry contractors near me,local,/,unverified,unverified,planned
+Brick masonry,brick mason pompano beach,commercial,/brick-masonry/,unverified,unverified,planned
+Brick masonry,brick masonry contractor pompano beach,commercial,/brick-masonry/,unverified,unverified,planned
+Brick masonry,brick wall contractor pompano beach,commercial,/brick-walls/,unverified,unverified,planned
+Block masonry,block mason pompano beach,commercial,/block-masonry/,unverified,unverified,planned
+Block masonry,concrete block contractor pompano beach,commercial,/block-masonry/,unverified,unverified,planned
+Block masonry,concrete block wall contractor pompano beach,commercial,/concrete-block-walls/,unverified,unverified,planned
+Concrete masonry,concrete masonry pompano beach,commercial,/concrete-masonry/,unverified,unverified,planned
+Masonry repairs,masonry repair pompano beach,commercial,/masonry-repair/,unverified,unverified,planned
+Masonry repairs,brick repair pompano beach,commercial,/masonry-repair/,unverified,unverified,planned
+Stone masonry,stone masonry pompano beach,commercial,/stone-masonry/,unverified,unverified,planned
+Retaining walls,retaining wall contractor pompano beach,commercial,/retaining-walls/,unverified,unverified,planned
+Residential,residential masonry contractor pompano beach,commercial,/residential-masonry/,unverified,unverified,planned
+Commercial,commercial masonry contractor pompano beach,commercial,/commercial-masonry/,unverified,unverified,planned
+Stucco (if offered),stucco repair pompano beach,commercial,/stucco-repair/,unverified,unverified,conditional
+Geographic,masonry contractor deerfield beach / lighthouse point / fort lauderdale / coconut creek / coral springs / boca raton,local,/masonry-contractor-{city}-fl/,unverified,unverified,planned
+Informational,cost of block wall / permits for block walls in Broward / spalling repair,informational,/blog/{slug}/,unverified,unverified,planned
+Trust,reviews / licensed insured masonry contractor,brand,/reviews/ /about/ /our-process/,unverified,unverified,planned

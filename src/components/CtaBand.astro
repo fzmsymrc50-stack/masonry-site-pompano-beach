@@ -1,0 +1,15 @@
+---
+import { site } from '../data/site';
+const { lead = 'Not sure what you need?', text = 'Describe the job or send a few photos. We will point you to the right service.' } = Astro.props;
+const heading = `${lead} ${site.showPhone ? 'Call now for a free quote.' : 'Get your free quote.'}`;
+---
+<section class="cta-band" aria-label="Free quote"><div class="wrap">
+  <div>
+    <p class="cta-band-h">{heading}</p>
+    <p class="cta-band-t">{text}</p>
+  </div>
+  <div class="cta-band-btns">
+    {site.showPhone && <a class="btn call" href={`tel:${site.phoneHref}`}>Call Now · {site.phone}</a>}
+    <a class="btn" href="/#quote">Get Free Estimate</a>
+  </div>
+</div></section>

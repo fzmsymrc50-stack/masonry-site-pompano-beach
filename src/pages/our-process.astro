@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import { process } from '../data/site';
+---
+<Base title="Our Process | Masonry Contractor Pompano Beach" description="How a masonry project works with us: estimate, site visit, permits, build and final walkthrough.">
+  <section class="page-hero"><div class="wrap"><h1>Our Masonry Process</h1><p>Clear steps from first request to final walkthrough.</p></div></section>
+  <section class="section"><div class="wrap"><ol class="steps">{process.map(p => <li><strong>{p.t}</strong><br />{p.d}</li>)}</ol></div></section>
+</Base>

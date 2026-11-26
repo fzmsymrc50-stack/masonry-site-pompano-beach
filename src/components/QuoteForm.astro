@@ -1,0 +1,54 @@
+---
+import { site, services, areaList } from '../data/site';
+const { heading = 'Get a Free Estimate', id = 'quote', showCity = true, button = 'Request My Free Estimate', sub = true, service = '', cityValue = '' } = Astro.props;
+const connected = Boolean(site.formEndpoint);
+---
+<div class="form-card" id={id}>
+  <h2>{heading}</h2>
+  {sub && <p class="sub">Takes about 30 seconds.{site.responseTime ? ` ${site.responseTime}.` : ''}</p>}
+  <form method="post" action={site.formEndpoint || undefined} enctype="multipart/form-data" data-form data-connected={connected ? 'yes' : 'no'}>
+    {cityValue && <input type="hidden" name="city" value={cityValue} />}
+    <input class="hp" type="text" name="company_website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <div class="row2">
+      <div>
+        <label for={`${id}-name`}>Name</label>
+        <input id={`${id}-name`} name="name" autocomplete="name" required />
+      </div>
+      <div>
+        <label for={`${id}-phone`}>Phone</label>
+        <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+      </div>
+    </div>
+    <label for={`${id}-service`}>What do you need?</label>
+    <select id={`${id}-service`} name="service" required>
+      <option value="">Select a service</option>
+      {services.map(s => <option selected={s.name === service}>{s.name}</option>)}
+      <option>Not sure / other</option>
+    </select>
+    {showCity && <>
+      <label for={`${id}-city`}>City</label>
+      <select id={`${id}-city`} name="city">
+        {areaList.map(a => <option>{a.city}</option>)}
+        <option>Other</option>
+      </select>
+    </>}
+    <label for={`${id}-msg`}>Describe the job</label>
+    <textarea id={`${id}-msg`} name="message" rows="3" placeholder="Size, depth, and what is there now"></textarea>
+    <label for={`${id}-photos`}>Attach photos <span class="opt">(if needed)</span></label>
+    <input id={`${id}-photos`} name="photos" type="file" accept="image/*" multiple />
+    <button class="btn" type="submit">{button}</button>
+    <p class="form-status" role="status" aria-live="polite" hidden></p>
+    <p class="fine">{site.showPhone && <>Prefer to talk? Call <a href={`tel:${site.phoneHref}`}>{site.phone}</a>. </>}By submitting you agree to be contacted about your project.</p>
+  </form>
+</div>
+<script is:inline>
+  // Until a form endpoint is configured, do not pretend the request was sent.
+  document.querySelectorAll('form[data-form][data-connected="no"]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var s = f.querySelector('.form-status');
+      s.hidden = false;
+      s.textContent = 'Online requests are not switched on yet, so this was not sent.';
+    });
+  });
+</script>

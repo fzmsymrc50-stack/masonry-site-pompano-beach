@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site, areaList } from '../data/site';
+import { defaultPoints } from '../data/service-content';
+
+const title = 'Contact Masonry Pompano Beach | Masonry Contractor in Pompano Beach, FL';
+const description = 'Contact Masonry Pompano Beach about brick, block and stone masonry in Pompano Beach and nearby Broward County. Send your project details and request a free estimate.';
+
+const steps = [
+  { h: 'Submit your project details', p: 'Fill in the estimate form with your name, phone number, the type of work and a description. Add photos if you can.' },
+  { h: 'Your enquiry is received', p: 'Your details come to us as a single, complete enquiry, so you do not need to repeat yourself.' },
+  { h: 'We review the requirements', p: 'We read your description and look at your photos to understand what you need.' },
+  { h: 'We discuss next steps', p: 'We may ask follow-up questions and, where needed, talk about how the property or plans will be assessed.' },
+  { h: 'We prepare your estimate', p: 'We explain the proposed work and give you the price in a written estimate.' },
+];
+const include = ['The type of work (wall, repair, retaining wall, stone, commercial and so on)', 'Where the property is', 'Rough size, such as length and height for a wall', 'What is there now and what you would like done', 'Photos of the area, if you have them'];
+const projects = ['New brick and block work', 'Block walls and privacy walls', 'Masonry repair', 'Retaining walls', 'Stone masonry', 'Residential masonry', 'Commercial masonry'];
+const faqs = [
+  { q: 'What areas does Masonry Pompano Beach serve?', a: 'We are based in Pompano Beach and take projects in the cities within roughly a 30-minute drive, across Broward County and into southern Palm Beach County. The list is on this page and on the areas page.' },
+  { q: 'How do I request a masonry estimate?', a: 'Use the form at the top of this page. Enter your name and phone number, choose the type of work, describe the job and attach photos if you can, then send it.' },
+  { q: 'What information should I include?', a: 'The type of work, where the property is, rough measurements, what is there now and what you want done. Photographs help a great deal.' },
+  { q: 'Can I request an estimate for a residential or a commercial project?', a: 'Yes, we take both. For commercial work, plans or a written scope help us price it properly.' },
+  { q: 'Can I upload photos of my project?', a: 'Yes. The form has a photo upload, and you can attach more than one image.' },
+  { q: 'Do you have a physical office in Pompano Beach?', a: 'We work at our customers\' properties, and this website does not publish an office address. You do not need to visit anywhere to get an estimate: send the form and we will review your project.' },
+  { q: 'What happens after I submit the form?', a: 'We review what you have sent, may ask follow-up questions, discuss how the work will be assessed and then prepare a written estimate. We do not promise a particular response time here.' },
+];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'ContactPage', name: title, description, url: site.url + '/contact/', about: { '@type': 'GeneralContractor', name: site.name, url: site.url, areaServed: areaList.map(a => ({ '@type': 'City', name: a.city })) } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [ { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' }, { '@type': 'ListItem', position: 2, name: 'Contact' } ] },
+];
+// Service-area map: centred on Pompano Beach, no business pin or address.
+const mapSrc = 'https://maps.google.com/maps?q=Pompano%20Beach%2C%20FL&z=10&output=embed';
+---
+<Base title={title} description={description} schema={schema} focus={true}>
+
+  <section class="hero service-hero" aria-labelledby="h1"><div class="wrap grid">
+    <div class="hero-copy">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Contact</nav>
+      <p class="hero-eyebrow">Contact Masonry Pompano Beach</p>
+      <h1 id="h1">Let's Talk About Your Masonry Project</h1>
+      <p class="lead">Whether you have a cracked wall that needs looking at, a new wall to build or a commercial job to price, we are glad to hear about it. We take residential and commercial masonry enquiries across Pompano Beach and nearby Broward County.</p>
+      <p class="lead lead-2">The quickest way to start is the form. Tell us what you need, where the property is and what is there now, and add a photo if you can. You do not need to know the technical details.</p>
+      <ul class="points">
+        {defaultPoints.map((p, i) => (
+          <li>
+            {i === 0 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>}
+            {i === 1 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12zm0-9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>}
+            {i === 2 && <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3zm-2 9l3 3 6-6-1.4-1.4L10 12.2 8.4 10.6z"/></svg>}
+            {p}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <QuoteForm id="quote" heading="Get Your Free Estimate" showCity={false} />
+  </div></section>
+
+  <!-- Verified contact information -->
+  <section class="section"><div class="wrap">
+    <div class="sec-head"><h2>Contact information</h2></div>
+    <dl class="info-grid">
+      <div><dt>Business</dt><dd>{site.name}</dd></div>
+      <div><dt>Type of business</dt><dd>Masonry contractor: brick, block and stone</dd></div>
+      <div><dt>Based in</dt><dd>Pompano Beach, Florida</dd></div>
+      <div><dt>Service area</dt><dd>Pompano Beach and the cities within roughly a 30-minute drive</dd></div>
+      <div><dt>How to reach us</dt><dd>Use the estimate form at the top of this page</dd></div>
+      {site.showPhone && <div><dt>Phone</dt><dd><a href={`tel:${site.phoneHref}`}>{site.phone}</a></dd></div>}
+      {site.showEmail && <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>}
+      {site.showAddress && <div><dt>Address</dt><dd>{site.address.street}, {site.address.city}, {site.address.state} {site.address.zip}</dd></div>}
+      {site.showHours && <div><dt>Hours</dt><dd>{site.hours}</dd></div>}
+    </dl>
+  </div></section>
+
+  <!-- What happens after you contact us -->
+  <section class="section alt"><div class="wrap">
+    <div class="sec-head"><h2>What happens after you contact us</h2></div>
+    <ol class="process5">{steps.map(s => <li><h3>{s.h}</h3><p>{s.p}</p></li>)}</ol>
+  </div></section>
+
+  <!-- Map -->
+  <section class="section"><div class="wrap">
+    <div class="sec-head"><h2>Our location and service area</h2><p>Masonry Pompano Beach is based in Pompano Beach and works at customers' properties. The map shows Pompano Beach and the surrounding area we serve. It is not a marker for a customer-facing office.</p></div>
+    <div class="map-frame">
+      <iframe title="Map of Pompano Beach, Florida and the surrounding service area" src={mapSrc} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </div></section>
+
+  <!-- Areas -->
+  <section class="section alt"><div class="wrap sp-narrow">
+    <h2>Areas we serve</h2>
+    <p>We take projects in Pompano Beach and the cities around it, within roughly a 30-minute drive. Cities with a link have their own page with local information.</p>
+    <ul class="pills">{areaList.map(a => <li>{a.slug ? <a href={`/${a.slug}/`}>{a.city}</a> : <span class="pill">{a.city}</span>}</li>)}</ul>
+    <p class="fine">Drive times are approximate. If your property is just outside this list, include the address area in your enquiry and we will let you know.</p>
+  </div></section>
+
+  <!-- Why contact -->
+  <section class="section"><div class="wrap sp-narrow">
+    <h2>Why get in touch</h2>
+    <p>You can contact us about almost any masonry job, from a small repair to a new structure:</p>
+    <ul class="check">{projects.map(p => <li>{p}</li>)}</ul>
+    <p>You do not need to know every technical detail before you enquire. Describing what you can see or what you want is enough, and photos tell us more than most descriptions. We will help you work out the rest.</p>
+    <h3>What to include in your enquiry</h3>
+    <ul class="check">{include.map(p => <li>{p}</li>)}</ul>
+    <p>For more about what we do, see our <a href="/services/">masonry services</a> or <a href="/about/">about the company</a>.</p>
+  </div></section>
+
+  <!-- FAQs -->
+  <section class="section alt"><div class="wrap sp-narrow">
+    <h2>Contact questions</h2>
+    {faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+  </div></section>
+</Base>

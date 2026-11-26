@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import { services } from '../data/site';
+---
+<Base title="Masonry Services in Pompano Beach, FL | Brick, Block, Stone" description="Full list of masonry services in Pompano Beach: block, brick, stone, retaining walls, repairs, commercial and residential masonry.">
+  <section class="page-hero"><div class="wrap"><h1>Masonry Services in Pompano Beach, FL</h1><p>Every service we offer for homeowners and commercial clients.</p></div></section>
+  <section class="section"><div class="wrap grid3">
+    {services.map(s => <div class="card"><h3><a href={`/${s.slug}/`}>{s.name}</a></h3><p>{s.short}</p></div>)}
+  </div></section>
+</Base>
