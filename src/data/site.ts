@@ -187,7 +187,7 @@ export const process = [
 // ---- Homepage assets. Leave '' until REAL photos exist; placeholders render instead. ----
 // Put files in /public/images/ and set e.g. hero: '/images/hero-block-wall.jpg'
 export const images = {
-  hero: '', heroAlt: 'TODO describe the hero photo',
+  hero: '/images/hero/home.webp', heroAlt: 'Concrete block wall under construction',
   // Stock photos for now.
   services: {
     'brick-masonry': { src: '/images/stock/card-brick.webp', alt: 'Mason laying clay brick' },
@@ -207,4 +207,18 @@ export const images = {
     'commercial-masonry': { src: '/images/stock/walk-commercial.webp', alt: 'Mason setting block on a commercial foundation' },
   } as Record<string, { src: string; alt: string }>,
 };
+// Full-width banner photos behind the hero on each service page (1920x720).
+export const serviceHero: Record<string, string> = {
+  'brick-masonry': '/images/hero/brick-masonry.webp',
+  'block-masonry': '/images/hero/block-masonry.webp',
+  'concrete-block-walls': '/images/hero/concrete-block-walls.webp',
+  'concrete-masonry': '/images/hero/concrete-masonry.webp',
+  'masonry-repair': '/images/hero/masonry-repair.webp',
+  'stone-masonry': '/images/hero/stone-masonry.webp',
+  'retaining-walls': '/images/hero/retaining-walls.webp',
+  'brick-walls': '/images/hero/brick-walls.webp',
+  'commercial-masonry': '/images/hero/commercial-masonry.webp',
+  'residential-masonry': '/images/hero/residential-masonry.webp',
+};
+
 export const social: { name: string; href: string }[] = []; // TODO real profiles only

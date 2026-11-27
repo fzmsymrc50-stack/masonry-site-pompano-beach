@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import QuoteForm from './QuoteForm.astro';
-import { site, services, areaList } from '../data/site';
+import { site, services, areaList, serviceHero } from '../data/site';
 import { content, defaultPoints, photos } from '../data/service-content';
 
 const { item } = Astro.props;
@@ -37,7 +37,7 @@ const why = [
 <Base title={title} description={description} schema={schema} focus={true}>
 
   <!-- HERO: problem + service on the left, estimate form on the right -->
-  <section class="hero service-hero" aria-labelledby="h1"><div class="wrap grid">
+  <section class={`hero service-hero${serviceHero[item.slug] ? " has-photo" : ""}`} style={serviceHero[item.slug] ? `--hero-photo:url(${serviceHero[item.slug]})` : undefined} aria-labelledby="h1"><div class="wrap grid">
     <div class="hero-copy">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/services/">Services</a> / {item.name}</nav>
       <p class="hero-eyebrow">{item.name} in Pompano Beach, FL</p>

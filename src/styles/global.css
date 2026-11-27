@@ -222,7 +222,7 @@ nav.main .has-dd:hover>.dd,nav.main .has-dd:focus-within>.dd{display:flex}
 /* ===================== HERO REDESIGN ===================== */
 /* spacing scale: 8 / 16 / 24 / 32 / 48 / 64 */
 .hero{background:var(--dark);color:var(--white);padding:56px 0 64px}
-.hero.has-photo{background:linear-gradient(rgba(37,41,44,.86),rgba(37,41,44,.86)),var(--hero-photo) center/cover no-repeat}
+.hero.has-photo{background:linear-gradient(90deg,rgba(37,41,44,.92) 0%,rgba(37,41,44,.84) 50%,rgba(37,41,44,.66) 100%),var(--hero-photo) center/cover no-repeat}
 .hero .grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:64px;align-items:center}
 .hero-eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-family:var(--font);font-weight:600;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .hero-eyebrow::before{content:"";width:32px;height:3px;background:var(--accent);flex:none}
@@ -327,3 +327,5 @@ nav.main .has-dd:hover>.dd,nav.main .has-dd:focus-within>.dd{display:flex}
 
 .form-status[data-state="ok"]{border-left-color:#1F7A4D;background:#EAF6EF}
 .form-status[data-state="error"]{border-left-color:#B3261E;background:#FCEDEC}
+
+@media(max-width:960px){.hero.has-photo{background:linear-gradient(rgba(37,41,44,.88),rgba(37,41,44,.88)),var(--hero-photo) center/cover no-repeat}}
